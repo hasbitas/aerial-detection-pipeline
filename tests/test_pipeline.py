@@ -66,6 +66,36 @@ def test_empty_frame_row_preserves_csv_shape():
     assert next(csv.reader(io.StringIO(handle.getvalue()))) == ["empty.png", *([""] * 8), "2.00"]
 
 
+@pytest.mark.parametrize("cls,motion,landing,label", [
+    (0, 1, -1, "Vehicle 0.84 | moving"),
+    (0, 0, -1, "Vehicle 0.84 | stationary"),
+    (1, -1, -1, "Person 0.84"),
+    (2, -1, 1, "UAP 0.84 | landing OK"),
+    (2, -1, 0, "UAP 0.84 | landing blocked"),
+    (3, -1, 1, "UAI 0.84 | landing OK"),
+    (3, -1, 0, "UAI 0.84 | landing blocked"),
+    (0, -1, -1, "Vehicle 0.84"),
+    (2, -1, -1, "UAP 0.84"),
+])
+def test_annotations_show_only_applicable_statuses(monkeypatch, cls, motion, landing, label):
+    frame = np.zeros((100, 400, 3), dtype=np.uint8)
+    result = Results(frame, path="", names=CLASS_NAMES, boxes=np.empty((0, 6)))
+    texts = []
+    real_put_text = cv2.putText
+
+    def record(image, text, *args):
+        texts.append(text)
+        return real_put_text(image, text, *args)
+
+    monkeypatch.setattr(pipeline.cv2, "putText", record)
+    det = {"bbox": [380, 0, 399, 80], "cls": cls, "conf": .84,
+           "motion_status": motion, "landing_status": landing}
+    annotated = pipeline.annotate_frame(result, [det], 12)
+    assert texts == [label, "FPS: 12.00"]
+    assert np.any(annotated[0, :380])  # Filled label is shifted inside the right edge.
+    assert not np.any(frame)  # Rendering does not mutate the input.
+
+
 def test_prefetch_propagates_decode_exceptions(tmp_path, monkeypatch):
     def fail(_):
         raise RuntimeError("Decode failed")

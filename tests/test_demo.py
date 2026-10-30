@@ -20,6 +20,31 @@ def test_interface_builds_without_loading_weights(monkeypatch):
     interface.close()
 
 
+def test_sample_example_runs_on_click_with_cpu_default(monkeypatch):
+    registered = []
+    real_examples = app.gr.Examples
+
+    def record_examples(**kwargs):
+        registered.append(kwargs)
+        return real_examples(**kwargs)
+
+    monkeypatch.setattr(app.gr, "Examples", record_examples)
+    monkeypatch.setattr(app, "ensure_weights", lambda: pytest.fail("UI must not fetch weights"))
+    monkeypatch.setattr(app, "analyze", lambda video, images, device: (video, images, device))
+    interface = app.build_interface()
+    try:
+        example, = registered
+        assert app.SAMPLE_VIDEO.is_file()
+        assert example["examples"] == [[str(app.SAMPLE_VIDEO), None]]
+        assert example["run_on_click"] is True
+        assert example["cache_examples"] is False
+        assert example["fn"](str(app.SAMPLE_VIDEO), None) == (str(app.SAMPLE_VIDEO), None, "cpu")
+        assert len(example["inputs"]) == 2
+        assert len(example["outputs"]) == 3
+    finally:
+        interface.close()
+
+
 def test_demo_image_sequence_and_csv(tmp_path, monkeypatch):
     monkeypatch.setattr(app, "CACHE", tmp_path / "cache")
     monkeypatch.setattr(app, "ensure_weights", lambda: "unused.pt")

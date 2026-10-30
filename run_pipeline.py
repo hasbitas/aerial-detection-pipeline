@@ -56,18 +56,30 @@ def load_detector(model_path):
 
 
 def annotate_frame(results, detections, fps):
-    """Draw canonical classes and official motion/landing codes on a frame."""
+    """Shared CLI/demo renderer: show only statuses applicable to each class."""
     annotated = results.orig_img.copy()
     colors = {0: (80, 210, 255), 1: (255, 180, 80), 2: (80, 220, 80), 3: (220, 100, 220)}
     for det in detections:
         x1, y1, x2, y2 = map(int, det["bbox"])
         color = colors[det["cls"]]
         cv2.rectangle(annotated, (x1, y1), (x2, y2), color, 2)
-        label = (f"{CLASS_NAMES[det['cls']]} {det['conf']:.2f} "
-                 f"motion:{MOTION_LABELS[det['motion_status']]} "
-                 f"landing:{LANDING_LABELS[det['landing_status']]}")
-        cv2.putText(annotated, label, (max(0, x1), max(15, y1 - 5)),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 1, cv2.LINE_AA)
+        label = f"{CLASS_NAMES[det['cls']]} {det['conf']:.2f}"
+        if det["cls"] == 0 and det["motion_status"] in (0, 1):
+            label += " | " + {0: "stationary", 1: "moving"}[det["motion_status"]]
+        elif det["cls"] in (2, 3) and det["landing_status"] in (0, 1):
+            label += " | landing " + {0: "blocked", 1: "OK"}[det["landing_status"]]
+        font, scale, padding = cv2.FONT_HERSHEY_SIMPLEX, 0.4, 3
+        (text_width, text_height), baseline = cv2.getTextSize(label, font, scale, 1)
+        height, width = annotated.shape[:2]
+        label_width = text_width + 2 * padding
+        label_height = text_height + baseline + 2 * padding
+        left = max(0, min(x1, width - label_width))
+        top = y1 - label_height if y1 >= label_height else y1
+        top = max(0, min(top, height - label_height))
+        cv2.rectangle(annotated, (left, top),
+                      (min(width - 1, left + label_width), top + label_height), color, -1)
+        cv2.putText(annotated, label, (left + padding, top + padding + text_height),
+                    font, scale, (15, 15, 15), 1, cv2.LINE_AA)
     cv2.putText(annotated, f"FPS: {fps:.2f}", (12, 28),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2, cv2.LINE_AA)
     return annotated

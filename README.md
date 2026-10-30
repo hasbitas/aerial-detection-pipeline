@@ -2,6 +2,8 @@
 
 Find vehicles, people, and marked landing areas in aerial images or videos, then view the results in your browser.
 
+![Real CPU pipeline output with detection boxes and motion/landing labels](docs/demo.gif)
+
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Model-yellow)](https://huggingface.co/Has1tas/yolo26s-aerial-uav)
 [Source code](https://github.com/hasbitas/aerial-detection-pipeline) | [Model card](hf/README.md) | [License](LICENSE)
 
@@ -44,6 +46,7 @@ Allow extra time for package downloads on a slow connection. No coding knowledge
    ```
    Setup creates `.venv`, a private folder for this project's Python packages (extra tools it needs), and installs both requirements files.
 4. Your browser should open **http://127.0.0.1:7860** with video and image upload boxes and an **Analyze** button.
+   For a one-click run, **click the sample video example** below the outputs; analysis starts automatically.
    If it does not open, paste that address into your browser. Keep the terminal window open.
    Stop the demo with **Ctrl+C** in that window; on Windows you can also close the window.
 
@@ -63,10 +66,9 @@ After setup, start it from the project folder with these exact commands:
 ./start.sh
 ```
 
-1. Open http://127.0.0.1:7860. Choose **either** one short video **or** images in the frame-sequence box.
-   For the quickest check, use one aerial photo. Use consecutive images for meaningful motion estimates.
-   Sample footage is not bundled; supply your own image or video.
-2. Click **Analyze**. The first analysis automatically downloads the model weights (saved information learned during training),
+1. Open http://127.0.0.1:7860 and **click the sample video example** to load the bundled clip and start analysis.
+   Alternatively, choose **either** one short video **or** consecutive images, then click **Analyze**.
+2. The first analysis automatically downloads the model weights (saved information learned during training),
    about **60 MB**, from [Hugging Face](https://huggingface.co/Has1tas/yolo26s-aerial-uav), unless `models/yolo26s-aerial.pt` already exists.
    Internet is needed for setup and that first download. Later analysis can use the local weights without internet.
 3. Look at **Annotated frames** or **Annotated video**, then click **Download detection CSV** to save the results table.
@@ -75,6 +77,38 @@ After setup, start it from the project folder with these exact commands:
 Videos may contain up to **600 frames** (20 seconds at 30 frames per second).
 Image requests may contain up to **100 images**, ordered by filename (`frame2.jpg` comes before `frame10.jpg`).
 Output videos have no audio. Processing on the CPU (your computer's main processor) at the default image size can take a while.
+
+### Sample data
+
+The example clip contains frames 1200-1499 of the **TEKNOFEST 2025 Aviation AI
+(Havacilikta Yapay Zeka), session-1 sample sequence**: `frame_001200.webp` through
+`frame_001499.webp` (300 frames). Credit: [TEKNOFEST](https://www.teknofest.org/).
+The sample shows vehicles and people; it contains no UAP/UAI landing areas.
+It is downscaled from 3840×2160 to 1280×720, encoded as H.264 at 30 fps (10 seconds),
+and included only for demonstration. The GIF shows six seconds of real pipeline output;
+[the screenshot](docs/screenshot.png) shows a frame with several detections.
+
+Regenerate the clip from your own local copy of that sequence (requires ffmpeg on PATH
+or `imageio-ffmpeg` from the demo requirements):
+
+```sh
+python examples/make_sample.py path/to/source_frames --start 1200 --count 300 --output examples/sample_300_frames.mp4
+```
+
+With local weights installed, `python examples/render_demo.py` regenerates the GIF and
+screenshot on CPU. Per-frame detections and timing observations go to ignored
+`outputs/sample_demo/`; they are demonstration results, not accuracy measurements.
+
+To locate landing-area detections across a full image sequence without changing
+the sample clip, run a CPU scan (every tenth source frame, 100-frame windows):
+
+```sh
+python examples/scan_sequence.py path/to/source_frames --output outputs/sequence_scan.json
+```
+
+Counts are detection boxes summed over sampled frames, not unique objects or
+estimates for skipped frames. Windows use zero-based positions in natural filename
+order. The JSON includes sampled filenames, confidence, and inference image size.
 
 ## How it works
 
@@ -119,7 +153,8 @@ For a Person, neither status applies, so both codes are -1. A single photo canno
 | `setup.bat` / `setup.sh` | Install the Python packages for your operating system. |
 | `start.bat` / `start.sh` | Open the local browser demo. |
 | `demo/` | Browser interface and its extra package list. |
-| `docs/` | Place for screenshots, GIFs, and other demo images. |
+| `examples/` | Bundled sample video and scripts to regenerate the sample and visuals. |
+| `docs/` | Annotated demo GIF and representative screenshot. |
 | `models/` | Local model weights; created on download if needed and ignored by Git. |
 | `outputs/` | Default command-line results; created when needed and ignored by Git. |
 | `.gradio/` | Temporary browser-demo results; created when needed and ignored by Git. |
@@ -204,7 +239,7 @@ Inference explicitly uses `--imgsz 1280` by default to match the training image 
 
 ### Status rules and configuration
 
-Checkpoint class order is normalized by name, including legacy labels; the output order above is fixed. Optional person motion is available as an internal debug value, while CSV and demo labels always use the official status codes.
+Checkpoint class order is normalized by name, including legacy labels; the output order above is fixed. Optional person motion is available as an internal debug value. CSV status codes remain unchanged. Shared CLI, demo, and documentation annotations show class and confidence, with `moving`/`stationary` only for Vehicle and `landing OK`/`landing blocked` only for UAP/UAI. Each class has a distinct box color and a filled label background.
 
 **Motion:** sparse Lucas-Kanade optical flow follows background features on downscaled frames. A RANSAC partial affine transform estimates camera motion relative to three frames earlier. Same-class detections are matched exclusively using flow-predicted centers. Residual center displacement after camera compensation must exceed both 5% of the box diagonal and an adaptive pixel floor (at least 3 pixels). A five-observation majority vote reduces jitter; young tracks default to stationary. Edge-clipped boxes suppress raw motion estimates. Thresholds are configurable in `status_resolver/config.py`.
 

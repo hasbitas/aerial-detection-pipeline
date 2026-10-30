@@ -28,6 +28,7 @@ from status_resolver import StatusConfig, StatusResolver
 
 MAX_VIDEO_FRAMES = 600
 MAX_IMAGES = 100
+SAMPLE_VIDEO = ROOT / "examples" / "sample_300_frames.mp4"
 
 
 def analyze(video, images, device="cpu"):
@@ -150,6 +151,12 @@ def build_interface(device="cpu"):
 
         run.click(predict, inputs=[video, images], outputs=[output_video, output_gallery, output_csv],
                   concurrency_limit=1)
+        gr.Examples(
+            examples=[[str(SAMPLE_VIDEO), None]], inputs=[video, images],
+            outputs=[output_video, output_gallery, output_csv], fn=predict,
+            cache_examples=False, run_on_click=True,
+            label="Click the sample video example to analyze it (CPU may take a while)",
+        )
         gr.Markdown("Outputs use canonical class IDs. Motion: -1 N/A, 0 stationary, 1 moving. "
                     "Landing: -1 N/A, 0 unsuitable, 1 suitable. "
                     "Image names define sequence order; unrelated photos do not yield meaningful motion.")
