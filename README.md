@@ -15,13 +15,6 @@ It estimates whether vehicles are moving and whether a detected landing area loo
 For example: aerial video -> video with labels + a table you can download.
 It is a portfolio project for TEKNOFEST 2026 Aviation AI, task 1; its labels do not prove that a real landing is safe.
 
-## Demo preview
-
-<!-- DEMO_VIDEO -->
-
-Screenshot/GIF slot: add demo images or recordings to [docs/](docs/), then link them here.
-No preview is included yet.
-
 ## Quick start (5 minutes)
 
 Allow extra time for package downloads on a slow connection. No coding knowledge is needed.
