@@ -1,0 +1,10 @@
+# Python 3.10+; CPU inference is supported without CUDA.
+# Optional GPU: install the appropriate CUDA build of torch/torchvision first.
+# https://pytorch.org/get-started/locally/
+torch>=2.5,<3
+torchvision>=0.20,<1
+ultralytics>=8.4.78,<9
+opencv-python>=4.9,<5
+numpy>=1.26,<3
+huggingface-hub>=0.27,<2
+pytest>=8,<10

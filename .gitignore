@@ -1,0 +1,31 @@
+# Python and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Weights and generated results
+*.pt
+*.pth
+*.onnx
+*.csv
+outputs/
+runs/
+gmc_benchmark_results.json
+
+# Demo artifacts and download caches
+.gradio/
+gradio_cached_examples/
+.cache/
+models/.cache/
+
+# Local settings and secrets
+.env
+.env.*
+auth.json
+.credentials.json
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
