@@ -49,6 +49,7 @@ def inspect_checkpoint(path):
     result = {
         "checkpoint_filename": Path(path).name,
         "sha256": digest,
+        "size_bytes": Path(path).stat().st_size,
         "source": "torch.load(map_location='cpu', weights_only=False); metadata only, no new evaluation",
         "checkpoint_keys": list(checkpoint),
         "network_stored_in": stored_in,

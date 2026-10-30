@@ -36,7 +36,7 @@ No coding is needed for the companion project's browser interface.
    ./start.sh
    ```
 4. Open **http://127.0.0.1:7860**, supply one aerial photo, consecutive images, or a short video, and click **Analyze**.
-   The first analysis downloads `yolo26s-aerial.pt` (about 60 MB) unless it is already in the project's `models/` folder.
+   The first analysis downloads `yolo26s-aerial.pt` (about 20.5 MB) unless it is already in the project's `models/` folder.
    No sample footage is bundled. CPU processing works without a graphics card and can take a while.
 5. View the labelled images/video and download the CSV, a table that spreadsheet apps can open.
    Videos are limited to 600 frames; image requests to 100 images. Output video has no audio.

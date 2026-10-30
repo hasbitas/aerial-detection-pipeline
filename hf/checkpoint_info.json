@@ -1,6 +1,7 @@
 {
   "checkpoint_filename": "yolo26s-aerial.pt",
-  "sha256": "203ede221411c8eb256d09a94ecff92c209efd5d904b0d88e3be5962303b47c1",
+  "sha256": "4decc60f6669e5c8e6c0786a2e24daf6ffa8156965bd986d260c094cf184a6ea",
+  "size_bytes": 20512546,
   "source": "torch.load(map_location='cpu', weights_only=False); metadata only, no new evaluation",
   "checkpoint_keys": [
     "epoch",
@@ -19,7 +20,7 @@
     "license",
     "docs"
   ],
-  "network_stored_in": "ema",
+  "network_stored_in": "model",
   "epoch": 42,
   "epoch_note": "Stored zero-based epoch; train_results records one-based epoch numbers.",
   "date": "2026-07-02T15:16:08.195867",

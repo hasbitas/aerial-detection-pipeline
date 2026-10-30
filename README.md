@@ -69,7 +69,7 @@ After setup, start it from the project folder with these exact commands:
 1. Open http://127.0.0.1:7860 and **click the sample video example** to load the bundled clip and start analysis.
    Alternatively, choose **either** one short video **or** consecutive images, then click **Analyze**.
 2. The first analysis automatically downloads the model weights (saved information learned during training),
-   about **60 MB**, from [Hugging Face](https://huggingface.co/Has1tas/yolo26s-aerial-uav), unless `models/yolo26s-aerial.pt` already exists.
+   about **20.5 MB**, from [Hugging Face](https://huggingface.co/Has1tas/yolo26s-aerial-uav), unless `models/yolo26s-aerial.pt` already exists.
    Internet is needed for setup and that first download. Later analysis can use the local weights without internet.
 3. Look at **Annotated frames** or **Annotated video**, then click **Download detection CSV** to save the results table.
    A CSV is a plain-text table that spreadsheet apps can open. Download results before stopping the server; demo files are temporary.
@@ -174,7 +174,7 @@ For a Person, neither status applies, so both codes are -1. A single photo canno
 | "Python not found", or the Microsoft Store opens | Install Python 3.11+ from python.org with **Add Python to PATH** selected. Reopen the terminal and run setup again. On macOS/Linux, the scripts look for `python3`, then `python`. |
 | Setup or `pip install` fails | Read the last error above "Setup failed". Check your internet connection, free disk space, and Python version. Run setup again. On Linux, a missing `venv` module may require your distribution's `python3-venv` package. For `libGL.so.1` errors, see the Linux packages below. |
 | "Port already in use" or port 7860 is unavailable | Stop a previous demo with Ctrl+C or close its terminal, then rerun start. Keep port 7860 free; the start scripts request that exact port. |
-| Model download is slow or internet is unavailable | Wait for the first ~60 MB download and check access to Hugging Face. Retry Analyze after reconnecting. For offline use, copy the trusted `yolo26s-aerial.pt` file to `models/` first (create the folder if needed). |
+| Model download is slow or internet is unavailable | Wait for the first ~20.5 MB download and check access to Hugging Face. Retry Analyze after reconnecting. For offline use, copy the trusted `yolo26s-aerial.pt` file to `models/` first (create the folder if needed). |
 | "CUDA not available", or processing is slow | CUDA lets supported NVIDIA graphics cards run the detector. The start scripts use CPU, which is fine and needs no CUDA. Remove a manual `--device cuda` option, and try a photo or shorter video. |
 | Scripts will not run, or the page does not open | Extract the ZIP first and run setup before start. On macOS/Linux run `chmod +x setup.sh start.sh`, or use `bash setup.sh` and `bash start.sh`. Open http://127.0.0.1:7860 manually after the server prints its address. |
 
