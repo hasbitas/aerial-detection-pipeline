@@ -180,7 +180,7 @@ def test_missing_weights_download_from_shared_repository(tmp_path, monkeypatch):
     import huggingface_hub
     weights = tmp_path / "weights.pt"
     monkeypatch.setattr(model_weights, "DEFAULT_MODEL", weights)
-    assert model_weights.HF_REPO_ID == "Has1tas/yolo26s-aerial-uav"
+    assert model_weights.HF_REPO_ID == "1at33/yolo26s-aerial-uav"
     calls = []
 
     def download(**kwargs):

@@ -4,8 +4,8 @@ Find vehicles, people, and marked landing areas in aerial images or videos, then
 
 ![Real CPU pipeline output with detection boxes and motion/landing labels](docs/demo.gif)
 
-[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Model-yellow)](https://huggingface.co/Has1tas/yolo26s-aerial-uav)
-[Source code](https://github.com/hasbitas/aerial-detection-pipeline) | [Model card](hf/README.md) | [License](LICENSE)
+[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Model-yellow)](https://huggingface.co/1at33/yolo26s-aerial-uav)
+[Source code](https://github.com/1at33/aerial-detection-pipeline) | [Model card](hf/README.md) | [License](LICENSE)
 
 ## What does it do?
 
@@ -22,11 +22,11 @@ Allow extra time for package downloads on a slow connection. No coding knowledge
 1. Install **Python 3.11 or newer** from [python.org](https://www.python.org/downloads/).
    On Windows, tick **Add Python to PATH** in the installer. Close and reopen any terminal afterward.
    Python 3.12 is the version used to verify this project. This project has no separate frontend; Node.js is not needed.
-2. [Open the project on GitHub](https://github.com/hasbitas/aerial-detection-pipeline).
+2. [Open the project on GitHub](https://github.com/1at33/aerial-detection-pipeline).
    Click the green **Code** button -> **Download ZIP**. Extract the ZIP into a normal folder first.
    Alternatively, if you already have Git, run:
    ```text
-   git clone https://github.com/hasbitas/aerial-detection-pipeline.git
+   git clone https://github.com/1at33/aerial-detection-pipeline.git
    cd aerial-detection-pipeline
    ```
 3. Open the extracted project folder.
@@ -62,7 +62,7 @@ After setup, start it from the project folder with these exact commands:
 1. Open http://127.0.0.1:7860 and **click the sample video example** to load the bundled clip and start analysis.
    Alternatively, choose **either** one short video **or** consecutive images, then click **Analyze**.
 2. The first analysis automatically downloads the model weights (saved information learned during training),
-   about **20.5 MB**, from [Hugging Face](https://huggingface.co/Has1tas/yolo26s-aerial-uav), unless `models/yolo26s-aerial.pt` already exists.
+   about **20.5 MB**, from [Hugging Face](https://huggingface.co/1at33/yolo26s-aerial-uav), unless `models/yolo26s-aerial.pt` already exists.
    Internet is needed for setup and that first download. Later analysis can use the local weights without internet.
 3. Look at **Annotated frames** or **Annotated video**, then click **Download detection CSV** to save the results table.
    A CSV is a plain-text table that spreadsheet apps can open. Download results before stopping the server; demo files are temporary.
@@ -213,7 +213,7 @@ CUDA is optional. For CPU-only PyTorch packages, install `torch` and `torchvisio
 
 ### Frame command line and checkpoint
 
-The public weights are available at [Has1tas/yolo26s-aerial-uav](https://huggingface.co/Has1tas/yolo26s-aerial-uav) as `yolo26s-aerial.pt`. The download helper uses this live repository.
+The public weights are available at [1at33/yolo26s-aerial-uav](https://huggingface.co/1at33/yolo26s-aerial-uav) as `yolo26s-aerial.pt`. The download helper uses this live repository.
 
 Replace `path/to/frames` (or `path\to\frames`) with your own folder of consecutive images. These are placeholders, not bundled sample paths.
 
@@ -316,4 +316,4 @@ Tests cover landing rules, exclusive matching, temporal voting, empty-frame hist
 
 ## License and acknowledgements
 
-[AGPL-3.0](LICENSE). Detector inference is built on [Ultralytics](https://github.com/ultralytics/ultralytics). Thanks to [TEKNOFEST](https://www.teknofest.org/) for the Aviation AI competition context. This is an independent portfolio project maintained by [hasbitas](https://github.com/hasbitas); no official endorsement is implied.
+[AGPL-3.0](LICENSE). Detector inference is built on [Ultralytics](https://github.com/ultralytics/ultralytics). Thanks to [TEKNOFEST](https://www.teknofest.org/) for the Aviation AI competition context. This is an independent portfolio project maintained by [1at33](https://github.com/1at33); no official endorsement is implied.

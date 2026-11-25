@@ -1,7 +1,7 @@
 """One source of truth for the model repository and local weight filename."""
 from pathlib import Path
 
-HF_REPO_ID = "Has1tas/yolo26s-aerial-uav"
+HF_REPO_ID = "1at33/yolo26s-aerial-uav"
 WEIGHTS_FILENAME = "yolo26s-aerial.pt"
 DEFAULT_MODEL = Path(__file__).resolve().parent / "models" / WEIGHTS_FILENAME
 

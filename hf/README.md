@@ -13,7 +13,7 @@ tags:
 
 Find vehicles, people, and marked parking or landing areas in images taken from above.
 
-[Model weights](https://huggingface.co/Has1tas/yolo26s-aerial-uav) | [Browser demo setup and source code](https://github.com/hasbitas/aerial-detection-pipeline)
+[Model weights](https://huggingface.co/1at33/yolo26s-aerial-uav) | [Browser demo setup and source code](https://github.com/1at33/aerial-detection-pipeline)
 
 ## What does it do?
 
@@ -28,7 +28,7 @@ Those extra statuses come from image-processing rules, not directly from this mo
 No coding is needed for the companion project's browser interface.
 
 1. Install Python 3.11+ from [python.org](https://www.python.org/downloads/). On Windows tick **Add Python to PATH**.
-2. Open the [source repository](https://github.com/hasbitas/aerial-detection-pipeline), click **Code -> Download ZIP**, and extract it.
+2. Open the [source repository](https://github.com/1at33/aerial-detection-pipeline), click **Code -> Download ZIP**, and extract it.
 3. On Windows double-click `setup.bat`, then `start.bat`. On macOS/Linux open Terminal in the extracted folder and run:
    ```sh
    chmod +x setup.sh start.sh
@@ -45,7 +45,7 @@ No coding is needed for the companion project's browser interface.
 Setup and the first weight download need internet. Later runs can use the local weights offline.
 If Python is missing, reinstall with PATH enabled. If setup fails, read its last error and check your internet connection.
 If port 7860 is busy, stop the earlier demo. If CUDA (NVIDIA's graphics-card computing system) is unavailable, use CPU.
-See the [project README](https://github.com/hasbitas/aerial-detection-pipeline#troubleshooting) for more fixes.
+See the [project README](https://github.com/1at33/aerial-detection-pipeline#troubleshooting) for more fixes.
 
 ## Classes and status codes
 
@@ -103,7 +103,7 @@ model = YOLO(path)
 results = model.predict("frame.jpg", imgsz=1280, device="cpu", conf=0.25)
 ```
 
-To work outside the companion repository, pass `repo_id="Has1tas/yolo26s-aerial-uav"` and `filename="yolo26s-aerial.pt"` directly to `hf_hub_download`. Inference uses `imgsz=1280` to match the training image size. The example returns raw checkpoint classes; run `run_pipeline.py` from the linked repository to get canonical IDs and status CSV output.
+To work outside the companion repository, pass `repo_id="1at33/yolo26s-aerial-uav"` and `filename="yolo26s-aerial.pt"` directly to `hf_hub_download`. Inference uses `imgsz=1280` to match the training image size. The example returns raw checkpoint classes; run `run_pipeline.py` from the linked repository to get canonical IDs and status CSV output.
 
 ### Architecture and stored training information
 
@@ -175,6 +175,6 @@ A high overall score does not guarantee good results for each class or a new cam
 
 ## License and acknowledgements
 
-[AGPL-3.0](https://github.com/hasbitas/aerial-detection-pipeline/blob/main/LICENSE).
+[AGPL-3.0](https://github.com/1at33/aerial-detection-pipeline/blob/main/LICENSE).
 Built with [Ultralytics](https://github.com/ultralytics/ultralytics) for the [TEKNOFEST](https://www.teknofest.org/) competition context.
-An independent portfolio project by [hasbitas](https://github.com/hasbitas); no official endorsement is implied.
+An independent portfolio project by [1at33](https://github.com/1at33); no official endorsement is implied.
