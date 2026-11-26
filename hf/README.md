@@ -35,7 +35,7 @@ No coding is needed for the companion project's browser interface.
    ./setup.sh
    ./start.sh
    ```
-4. Open **http://127.0.0.1:7860**, supply one aerial photo, consecutive images, or a short video, and click **Analyze**.
+4. In your browser, go to the local address `http://127.0.0.1:7860` (it works only on your computer while the demo started by `start.bat`/`start.sh` is running), supply one aerial photo, consecutive images, or a short video, and click **Analyze**.
    The first analysis downloads `yolo26s-aerial.pt` (about 20.5 MB) unless it is already in the project's `models/` folder.
    No sample footage is bundled. CPU processing works without a graphics card and can take a while.
 5. View the labelled images/video and download the CSV, a table that spreadsheet apps can open.
@@ -90,20 +90,19 @@ This repository contains the model card and stored metadata; use the linked sour
 
 Raw Ultralytics predictions retain checkpoint IDs. The companion pipeline maps by name before resolving statuses, so its output IDs differ for the two landing classes.
 
-The example below runs from the companion repository root after installing its requirements.
+Install the packages first: `pip install ultralytics huggingface_hub`.
 Replace `frame.jpg` with your own existing image; it is not a bundled file.
 
 ```python
 from huggingface_hub import hf_hub_download
 from ultralytics import YOLO
-from model_weights import HF_REPO_ID, WEIGHTS_FILENAME
 
-path = hf_hub_download(repo_id=HF_REPO_ID, filename=WEIGHTS_FILENAME)
+path = hf_hub_download(repo_id="1at33/yolo26s-aerial-uav", filename="yolo26s-aerial.pt")
 model = YOLO(path)
 results = model.predict("frame.jpg", imgsz=1280, device="cpu", conf=0.25)
 ```
 
-To work outside the companion repository, pass `repo_id="1at33/yolo26s-aerial-uav"` and `filename="yolo26s-aerial.pt"` directly to `hf_hub_download`. Inference uses `imgsz=1280` to match the training image size. The example returns raw checkpoint classes; run `run_pipeline.py` from the linked repository to get canonical IDs and status CSV output.
+Inference uses `imgsz=1280` to match the training image size. The example returns raw checkpoint classes; run `run_pipeline.py` from the linked repository to get canonical IDs and status CSV output.
 
 ### Architecture and stored training information
 
@@ -112,7 +111,7 @@ Strides describe how widely spaced the detector's output positions are in image 
 Its embedded YAML (a text configuration) identifies `yolo26s.yaml`, scale `s`.
 The run name `s_p2_1280_A` is a legacy label; this model is published as YOLO26s.
 
-The following are extracted only from [checkpoint_info.json](checkpoint_info.json), using `torch.load(..., map_location="cpu", weights_only=False)` on the supplied checkpoint. No training or independent evaluation was performed for this card.
+The following are extracted only from [checkpoint_info.json](https://huggingface.co/1at33/yolo26s-aerial-uav/blob/main/checkpoint_info.json), using `torch.load(..., map_location="cpu", weights_only=False)` on the supplied checkpoint. No training or independent evaluation was performed for this card.
 
 | Stored field | Value |
 |---|---|
