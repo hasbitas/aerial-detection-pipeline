@@ -316,4 +316,4 @@ Tests cover landing rules, exclusive matching, temporal voting, empty-frame hist
 
 ## License and acknowledgements
 
-[AGPL-3.0](LICENSE). Detector inference is built on [Ultralytics](https://github.com/ultralytics/ultralytics). Thanks to [TEKNOFEST](https://www.teknofest.org/) for the Aviation AI competition context. This is an independent portfolio project maintained by [1at33](https://github.com/hasbitas); no official endorsement is implied.
+[AGPL-3.0](LICENSE). Detector inference is built on [Ultralytics](https://github.com/ultralytics/ultralytics). Thanks to [TEKNOFEST](https://www.teknofest.org/) for the Aviation AI competition context. This is an independent portfolio project maintained by [hasbitas](https://github.com/hasbitas); no official endorsement is implied.

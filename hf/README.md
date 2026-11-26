@@ -176,4 +176,4 @@ A high overall score does not guarantee good results for each class or a new cam
 
 [AGPL-3.0](https://github.com/hasbitas/aerial-detection-pipeline/blob/main/LICENSE).
 Built with [Ultralytics](https://github.com/ultralytics/ultralytics) for the [TEKNOFEST](https://www.teknofest.org/) competition context.
-An independent portfolio project by [1at33](https://github.com/hasbitas); no official endorsement is implied.
+An independent portfolio project by [hasbitas](https://github.com/hasbitas); no official endorsement is implied.
