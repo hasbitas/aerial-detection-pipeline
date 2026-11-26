@@ -38,7 +38,7 @@ Allow extra time for package downloads on a slow connection. No coding knowledge
    ./start.sh
    ```
    Setup creates `.venv`, a private folder for this project's Python packages (extra tools it needs), and installs both requirements files.
-4. Your browser should open **http://127.0.0.1:7860** with video and image upload boxes and an **Analyze** button.
+4. Your browser should open `http://127.0.0.1:7860` (a local address that works only on your computer while the demo is running) with video and image upload boxes and an **Analyze** button.
    For a one-click run, **click the sample video example** below the outputs; analysis starts automatically.
    If it does not open, paste that address into your browser. Keep the terminal window open.
    Stop the demo with **Ctrl+C** in that window; on Windows you can also close the window.
@@ -59,7 +59,7 @@ After setup, start it from the project folder with these exact commands:
 ./start.sh
 ```
 
-1. Open http://127.0.0.1:7860 and **click the sample video example** to load the bundled clip and start analysis.
+1. Open `http://127.0.0.1:7860` and **click the sample video example** to load the bundled clip and start analysis.
    Alternatively, choose **either** one short video **or** consecutive images, then click **Analyze**.
 2. The first analysis automatically downloads the model weights (saved information learned during training),
    about **20.5 MB**, from [Hugging Face](https://huggingface.co/1at33/yolo26s-aerial-uav), unless `models/yolo26s-aerial.pt` already exists.
@@ -169,7 +169,7 @@ For a Person, neither status applies, so both codes are -1. A single photo canno
 | "Port already in use" or port 7860 is unavailable | Stop a previous demo with Ctrl+C or close its terminal, then rerun start. Keep port 7860 free; the start scripts request that exact port. |
 | Model download is slow or internet is unavailable | Wait for the first ~20.5 MB download and check access to Hugging Face. Retry Analyze after reconnecting. For offline use, copy the trusted `yolo26s-aerial.pt` file to `models/` first (create the folder if needed). |
 | "CUDA not available", or processing is slow | CUDA lets supported NVIDIA graphics cards run the detector. The start scripts use CPU, which is fine and needs no CUDA. Remove a manual `--device cuda` option, and try a photo or shorter video. |
-| Scripts will not run, or the page does not open | Extract the ZIP first and run setup before start. On macOS/Linux run `chmod +x setup.sh start.sh`, or use `bash setup.sh` and `bash start.sh`. Open http://127.0.0.1:7860 manually after the server prints its address. |
+| Scripts will not run, or the page does not open | Extract the ZIP first and run setup before start. On macOS/Linux run `chmod +x setup.sh start.sh`, or use `bash setup.sh` and `bash start.sh`. Open `http://127.0.0.1:7860` manually after the server prints its address. |
 
 ## For developers
 
